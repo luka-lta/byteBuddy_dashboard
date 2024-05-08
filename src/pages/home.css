@@ -1,0 +1,59 @@
+/* src/styles.css */
+
+/* Dunkler Hintergrund für die gesamte Anwendung */
+body {
+    background-color: #000000;
+    color: #fff; /* Standardtextfarbe für den gesamten Inhalt */
+    font-family: Arial, sans-serif; /* Beispiel-Schriftart für den Text */
+}
+
+/* Stil für das Login-Formular */
+.login-form {
+    background-color: #333; /* Hintergrundfarbe des Formulars */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für das Formular */
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Stil für die Eingabefelder */
+.form-label {
+    color: #fff; /* Textfarbe der Formularbeschriftung */
+}
+
+.form-placeholder {
+    color: #aaa; /* Textfarbe des Platzhalters in den Eingabefeldern */
+}
+
+.form-control {
+    background-color: #444; /* Hintergrundfarbe der Eingabefelder */
+    border-color: #555; /* Rahmenfarbe der Eingabefelder */
+    color: #fff; /* Textfarbe der Eingabefelder */
+}
+
+/* Stil für den Einloggen-Button */
+.btn-primary {
+    background-color: #007bff; /* Hintergrundfarbe des Einloggen-Buttons */
+    border-color: #007bff; /* Rahmenfarbe des Einloggen-Buttons */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Farbe beim Überfahren des Einloggen-Buttons */
+    border-color: #0056b3; /* Rahmenfarbe beim Überfahren des Einloggen-Buttons */
+}
+
+/* Stil für das Passwort-Anzeigen/Verbergen-Icon */
+.password-toggle-button {
+    color: #fff; /* Farbe des Augen-Icons */
+}
+
+/* Media Query für responsives Design */
+@media (max-width: 576px) {
+    .login-form {
+        width: 100%; /* Vollständige Breite auf kleinen Bildschirmen */
+    }
+}

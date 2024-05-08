@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, ListGroup, Form } from 'react-bootstrap';
+import {Container, ListGroup, Form, Badge, Spinner} from 'react-bootstrap';
 
 interface Command {
     id: number;
@@ -10,11 +10,16 @@ interface Command {
 
 function Commands() {
     const [commands, setCommands] = useState<Command[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         fetch('http://localhost/api/v1/commands')
             .then(response => response.json())
-            .then(data => setCommands(data.data));
+            .then(data => {
+                setCommands(data.data)
+                setLoading(false);
+            });
     }, []);
 
     const getStatusVariant = (disabled: number) => {
@@ -22,6 +27,7 @@ function Commands() {
     };
 
     const handleToggle = (id: number) => {
+        setLoading(true);
         const updatedCommands = commands.map(command =>
             command.id === id ? { ...command, disabled: command.disabled ? 0 : 1 } : command
         );
@@ -34,29 +40,36 @@ function Commands() {
                 'Content-Type': 'application/json',
             },
         }).then(response => response.json())
-            .then(data => console.log(data));
+            .then(() => setLoading(false));
     };
 
     return (
         <Container>
             <h1 className="mb-4">Commands</h1>
-            <ListGroup>
-                {commands.map((command: Command) => (
-                    <ListGroup.Item key={command.id}>
-                        {command.name}
-                        <span className={`badge ml-2 badge-${getStatusVariant(command.disabled)}`}>
-                            {command.disabled ? 'Inactive' : 'Active'}
-                        </span>
-                        {command.description}
-                        <Form.Check
-                            type="switch"
-                            id={`switch-${command.id}`}
-                            checked={!command.disabled}
-                            onChange={() => handleToggle(command.id)}
-                        />
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
+            {loading ? (
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            ) : (
+                <ListGroup>
+                    {commands.map((command: Command) => (
+                        <ListGroup.Item key={command.id}>
+                            {command.name}
+                            <br />
+                            {command.description}
+                            <Form.Check
+                                type="switch"
+                                id={`switch-${command.id}`}
+                                checked={!command.disabled}
+                                onChange={() => handleToggle(command.id)}
+                            />
+                            <Badge bg={getStatusVariant(command.disabled)}>
+                                {command.disabled ? 'Inactive' : 'Active'}
+                            </Badge>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            )}
         </Container>
     );
 }
